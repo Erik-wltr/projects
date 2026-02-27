@@ -39,7 +39,7 @@ def random_z_score():
     return np.random.normal(0,1)
 
 #Simulation
-portfolio_value = 100
+portfolio_value = 100000
 weights = np.array([1/len(tickers)]*len(tickers))
 portfolio_expected_return = expected_return(weights, ln_returns)
 portfolio_standard_deviation = standard_deviation(weights, cov_matrix)
@@ -60,11 +60,23 @@ for i in range(simulation):
 confidence_interval = 0.95
 VaR = -np.percentile(scenarioReturns, 100*(1-confidence_interval))
 
+def plot():
+    plt.hist(scenarioReturns, bins=50, density = True )
+    plt.xlabel("scenario Gain/Loss in $")
+    plt.ylabel("Frequency")
+    plt.title(f"Dist of Portfolio over {days} Days")
+    plt.axvline(-VaR, color='r', linestyle='dashed', label=f"VaR at {confidence_interval}%")
+    plt.legend()
+    plt.show()
+    return
+
+
 def main():
     print("portfolio value", portfolio_value)
     print("days:", days)
     print("confidence level:", confidence_interval)
     print(VaR)
+    plot()
     return
 
 
