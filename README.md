@@ -37,7 +37,7 @@ The 95% Value-at-Risk (VaR) and Expected Shortfall (ES) are calculated from the 
 
 The resulting gain/loss distribution is visualized to illustrate tail risk.
 
-Risk Metrics
+### Risk Metrics:
 
 Value-at-Risk (95%): Estimated loss threshold not exceeded with 95% confidence.
 
