@@ -43,6 +43,7 @@ def standard_deviation(weight, cov_matrix):
     variance = weight.T @ cov_matrix @ weight
     return np.sqrt(variance)
 
+#gives random z score to simulate randomness 
 def random_z_score():
     return np.random.normal(0,1)
 
@@ -65,6 +66,14 @@ for i in range(simulation):
 
 VaR = -np.percentile(scenarioReturns, 100*(1-confidence_interval))
 
+def calculate_ES(scenarioReturns, VaR):
+    shortfalls = []
+    for i in range(len(scenarioReturns)):
+        item = scenarioReturns[i]
+        if item <= -VaR:
+            shortfalls.append(item)
+    return np.average(shortfalls)
+
 def plot():
     plt.hist(scenarioReturns, bins=50, density = True )
     plt.xlabel("scenario Gain/Loss in $")
@@ -77,10 +86,11 @@ def plot():
 
 
 def main():
-    print("Initial portfolio value:"+ str(portfolio_value))
-    print("The VaR for a period of" , str(days), "days and a confidence intervall of", str(confidence_interval*100), "% is")
-    print(VaR)
-    plot()
+    print("The initial portfolio value is: "+ str(portfolio_value)+"$")
+    print("The VaR for a period of" , str(days), "days and a confidence interval of", str(confidence_interval*100), "% is", end =" ")
+    print(str(round(VaR,2))+"$")
+    print("The expected Shortfall is " + str(round(calculate_ES(scenarioReturns, VaR),2))+"$")
+    #plot()
     return
 
 
